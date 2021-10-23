@@ -1,8 +1,10 @@
-function App() {
+import DetermineSpeed from "./components/DetermineSpeed";
+
+const App = () => {
   return (
-    <div className="App">
-      <p>WiFi Speed Crowdsourcing</p>
-    </div>
+      <div className="App">
+        <DetermineSpeed />
+      </div>
   );
 }
 
