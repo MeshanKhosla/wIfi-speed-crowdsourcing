@@ -1,9 +1,13 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 const GetUserLocation = ({ userData, setUserData }) => {
   const [userLatitude, setUserLatitude] = useState(null);
   const [userLongitude, setUserLongitude] = useState(null);
   const [locationErrorMsg, setLocationErrorMsg] = useState("");
+
+    useEffect(() => {
+      getLocation();
+    }, [])
 
   const updateLatLong = location => {
     const lat = location.coords.latitude;
@@ -40,15 +44,15 @@ const GetUserLocation = ({ userData, setUserData }) => {
   }
   return (
       <div className="get-user-location">
-        <button onClick={getLocation}>Get location info</button>
+        {/*<button onClick={getLocation}>Get location info</button>*/}
         {locationErrorMsg && (
           <h4>Error with location: {locationErrorMsg}</h4>
         )}
-        {userLongitude && (
-            <h4>Longitude: {userLongitude}</h4>
-        )}
         {userLatitude && (
             <h4>Latitude: {userLatitude}</h4>
+        )}
+        {userLongitude && (
+            <h4>Longitude: {userLongitude}</h4>
         )}
       </div>
   );

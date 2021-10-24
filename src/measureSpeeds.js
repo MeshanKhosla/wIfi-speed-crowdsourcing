@@ -4,6 +4,8 @@ const now = require("performance-now")
 const https = require('https');
 const stats = require('./stats.js');
 
+const allDownloads = [];
+const allUploads = [];
 async function get(hostname, path) {
   return new Promise((resolve, reject) => {
     const req = https.request(
@@ -219,6 +221,7 @@ function logLatency(data) {
 
 function logSpeedTestResult(size, test) {
   const speed = stats.median(test).toFixed(2);
+  allDownloads.push(speed);
   console.log(
       ' '.repeat(9 - size.length), size, 'speed:', `${speed} Mbps`
   );
@@ -226,6 +229,7 @@ function logSpeedTestResult(size, test) {
 
 function logDownloadSpeed(tests) {
   const speed = stats.quartile(tests, 0.9).toFixed(2);
+  console.log('stats', tests)
   console.log(
       '  Download speed:',
       speed, 'Mbps'
@@ -284,15 +288,16 @@ async function speedTest() {
   const testUp3 = await measureUpload(1001000, 8);
   const uploadTests = [...testUp1, ...testUp2, ...testUp3];
   const upSpeed = logUploadSpeed(uploadTests);
+
+  console.log(allDownloads);
+  const dwnldAvg = stats.average(allDownloads.map(elem => parseFloat(elem)));
+
   return {
-    'downloadSpeed' : downSpeed,
+    'downloadSpeed' : dwnldAvg.toFixed(3),
     'uploadSpeed' : upSpeed,
   }
 }
 
 export const getSpeeds = async () => {
-  console.log('here');
-  await speedTest().then(val => {console.log(val)});
-  console.log('here done');
+  return await speedTest();
 }
-// getSpeeds();

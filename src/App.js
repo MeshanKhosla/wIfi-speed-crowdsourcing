@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import DetermineSpeed from "./components/DetermineSpeed";
 import GetUserLocation from "./components/GetUserLocation";
+import GetUserInformation from "./components/GetUserInformation";
 
 /*
   Data schema:
@@ -9,11 +10,12 @@ import GetUserLocation from "./components/GetUserLocation";
     "long": float,
     "ID": {"flrID":int, "bldID":int},
     "dateTime": yyyy-mm-dd hh:mm:ss.s,
-    "ntwrkData": {"wifiName": str, "dwnldSpd": float, "upldSpd":float, "outage": bool}
+    "dwnldSpd": float,
+    "upldSpd": float,
   }
  */
 
-const allKeys = ['lat', 'long', 'ID', 'dateTime', 'ntwrkData']
+const allKeys = ['lat', 'long', 'ID', 'dateTime', 'dwnldSpd', 'upldSpd']
 const App = () => {
   const [userData, setUserData] = useState({});
 
@@ -36,8 +38,7 @@ const App = () => {
   return (
       <div className="App">
         <p>WiFi Speed Crowdsourcing</p>
-        <DetermineSpeed />
-        <GetUserLocation userData={userData} setUserData={setUserData} />
+        <GetUserInformation userData={userData} setUserData={setUserData} />
       </div>
   );
 }
