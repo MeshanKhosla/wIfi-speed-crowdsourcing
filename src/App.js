@@ -1,6 +1,4 @@
 import { useState, useEffect } from 'react';
-import DetermineSpeed from "./components/DetermineSpeed";
-import GetUserLocation from "./components/GetUserLocation";
 import GetUserInformation from "./components/GetUserInformation";
 
 /*

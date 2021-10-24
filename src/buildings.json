@@ -1,0 +1,98 @@
+[
+    {
+        "name": "Bancroft Library",
+        "lat": 37.872359778544826,
+        "long": -122.25906388911869,
+        "radius": 0.001
+    },
+    {
+        "name": "David Blackwell Hall",
+        "lat": 37.867938242407455,
+        "long": -122.2611852179538,
+        "radius": 0.001
+    },
+    {
+        "name": "California Memorial Stadium",
+        "lat": 37.870792588866024,
+        "long": -122.25076757377833,
+        "radius": 0.001
+    },
+    {
+        "name": "Cory Hall",
+        "lat": 37.875239631248874,
+        "long": -122.25738857562385,
+        "radius": 0.001
+    },
+    {
+        "name": "Doe Library",
+        "lat": 37.872419295531834,
+        "long": -122.2595170136872,
+        "radius": 0.001
+    },
+    {
+        "name": "Dwinelle Hall",
+        "lat": 37.87092038181005,
+        "long": -122.26063763329417,
+        "radius": 0.001
+    },
+    {
+        "name": "C. V. Starr East Asian Library",
+        "lat": 37.87371969744682,
+        "long": -122.26035998542721,
+        "radius": 0.001
+    },
+    {
+        "name": "Evans Hall",
+        "lat": 37.87373951445669,
+        "long": -122.25766920445895,
+        "radius": 0.001
+    },
+    {
+        "name": "Haas School of Business",
+        "lat": 37.871846879040795,
+        "long": -122.25338168911863,
+        "radius": 0.001
+    },
+    {
+        "name": "Li Ka Shing Center",
+        "lat": 37.872892390509826,
+        "long": -122.26532291795363,
+        "radius": 0.001
+    },
+    {
+        "name": "Martin Luther King Jr. Center Student Union",
+        "lat": 37.86901620934252,
+        "long": -122.26037288911863,
+        "radius": 0.001
+    },
+    {
+        "name": "Moffitt Library",
+        "lat": 37.87272746906796,
+        "long": -122.26085806028352,
+        "radius": 0.001
+    },
+    {
+        "name": "Soda Hall",
+        "lat": 37.87572091103949,
+        "long": -122.25874358727283,
+        "radius": 0.001
+    },
+    {
+        "name": "Valley Life Sciences Building",
+        "lat": 37.87158013361558,
+        "long": -122.26222526028351,
+        "radius": 0.001
+    },
+    {
+        "name": "Wheeler Hall",
+        "lat": 37.871468295377646,
+        "long": -122.25911711610816,
+        "radius": 0.001
+    },
+    {
+        "name": "The Addison Apartments",
+        "lat": 37.871150946955936,
+        "long": -122.27174771266547,
+        "radius": 0.001
+    }
+]

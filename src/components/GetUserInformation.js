@@ -15,15 +15,19 @@ const GetUserInformation = ({ userData, setUserData }) => {
   }, [userData]);
 
   return (
+      // TODO: Replace
       <div className="get-user-information">
         <Button onClick={() => setScanStarted(true)}>Check WiFi Speed</Button>
-        {scanStarted && (
+        {/* {scanStarted && (
           <GetUserLocation userData={userData} setUserData={setUserData} />
-        )}
+        )} */}
 
-        {wifiTestStarted && (
+        <GetUserLocation userData={userData} setUserData={setUserData} />
+
+
+        {/* {wifiTestStarted && (
           <DetermineSpeed userData={userData} setUserData={setUserData} />
-        )}
+        )} */}
       </div>
   );
 }
