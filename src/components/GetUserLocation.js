@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import {Card, ProgressBar} from 'react-bootstrap';
 
 const GetUserLocation = ({ userData, setUserData }) => {
   const [userLatitude, setUserLatitude] = useState(null);
@@ -44,16 +45,26 @@ const GetUserLocation = ({ userData, setUserData }) => {
   }
   return (
       <div className="get-user-location">
-        {/*<button onClick={getLocation}>Get location info</button>*/}
-        {locationErrorMsg && (
-          <h4>Error with location: {locationErrorMsg}</h4>
-        )}
-        {userLatitude && (
-            <h4>Latitude: {userLatitude}</h4>
-        )}
-        {userLongitude && (
-            <h4>Longitude: {userLongitude}</h4>
-        )}
+        <Card
+            bg='info'
+            text='white'
+            className="user-info-card mb-2 mt-2"
+        >
+          <Card.Header>Your Location</Card.Header>
+          <Card.Body>
+            <Card.Text>
+              {locationErrorMsg && (
+                  <p>Error with location: {locationErrorMsg}</p>
+              )}
+              {userLatitude ? (
+                  <p>Latitude: {userLatitude}</p>
+              ) : <ProgressBar variant='warning' animated now={100} />}
+              {userLongitude && (
+                  <p>Longitude: {userLongitude}</p>
+              )}
+            </Card.Text>
+          </Card.Body>
+        </Card>
       </div>
   );
 }

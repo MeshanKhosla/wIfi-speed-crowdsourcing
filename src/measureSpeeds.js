@@ -271,15 +271,15 @@ async function speedTest() {
   const testDown4 = await measureDownload(25001000, 4);
   logSpeedTestResult('25MB', testDown4);
 
-  const testDown5 = await measureDownload(100001000, 1);
-  logSpeedTestResult('100MB', testDown5);
+  // const testDown5 = await measureDownload(100001000, 1);
+  // logSpeedTestResult('100MB', testDown5);
 
   const downloadTests = [
     ...testDown1,
     ...testDown2,
     ...testDown3,
     ...testDown4,
-    ...testDown5,
+    // ...testDown5,
   ];
   const downSpeed = logDownloadSpeed(downloadTests);
 
@@ -289,7 +289,6 @@ async function speedTest() {
   const uploadTests = [...testUp1, ...testUp2, ...testUp3];
   const upSpeed = logUploadSpeed(uploadTests);
 
-  console.log(allDownloads);
   const dwnldAvg = stats.average(allDownloads.map(elem => parseFloat(elem)));
 
   return {
