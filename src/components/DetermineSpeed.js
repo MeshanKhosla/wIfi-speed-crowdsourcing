@@ -29,9 +29,12 @@ const DetermineSpeed = () => {
   const [testStarted, setTestStarted] = useState(false);
 
   useEffect(() => {
-    console.log('start');
-    console.log(getSpeeds());
-    console.log('end');
+    (async () => {
+      console.log('start');
+      await getSpeeds();
+      // console.log(getSpeeds());
+      console.log('end');
+    })();
   }, [])
 
   const startTest = async () => {
