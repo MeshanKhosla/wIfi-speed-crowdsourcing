@@ -1,69 +1,59 @@
 import { useState, useEffect } from "react";
+import NetworkSpeed from 'network-speed'; 
 import SpeedChart from "./SpeedChart";
-// Json file containing various imgs in increasing file size
-// TODO: json doesn't need size
-import img_links from "./img_links.json";
 
-const NUM_TEST = 3;
+const NUM_TEST = 4;
+const START_BYTE_SIZE = 10000;
+const testNetworkSpeed = new NetworkSpeed();
 
-// Measures connection speed using an img_obj containing a link and size
-// TODO: set timeout
-const MeasureConnectionSpeed = (img_obj, speedVals, setSpeedVals) => {
-  let cacheBuster = "?nnn=" + Math.random();
-  const imageAddr = img_obj.link + cacheBuster;
-  const download = new Image();
-
-  download.onload = () => {
-    const resources = performance.getEntriesByType("resource");
-    // TODO: try catch
-    const currImg = resources.filter(elem => elem.name === imageAddr)[0];
-    const durationInSec = (currImg.responseEnd - currImg.startTime) / 1000;
-    const sizeInMb = (currImg.transferSize || img_obj.size) * 8 * 1e-6;
-    const speedInMbps = sizeInMb / durationInSec;
-    console.log(currImg);
-    console.log(durationInSec);
-    console.log(sizeInMb);
-    setSpeedVals([...speedVals, speedInMbps]);
-  };
-
-  download.onerror = function (err, msg) {
-    console.log("Invalid image, or error downloading");
-    console.log(err);  
-    setSpeedVals([...speedVals, null]);
-  };
-
-  download.src = imageAddr;
+const GetDownloadSpeed = async (byteSize, downloadSpeeds, setDownloadSpeeds) => {
+  const baseUrl = 'https://eu.httpbin.org/stream-bytes/' + byteSize.toString();
+  const speed = await testNetworkSpeed.checkDownloadSpeed(baseUrl, byteSize);
+  console.log(speed.mbps);
+  setDownloadSpeeds([...downloadSpeeds, speed.mbps]);    
 };
 
-const GetDownloadSpeed = (imgIndex, speedVals, setSpeedVals) => {
-  console.log("clicked");
-  console.log(imgIndex);
-  // Currently only use the first img link
-  MeasureConnectionSpeed(img_links[imgIndex], speedVals, setSpeedVals);
+const GetUploadSpeed = async (byteSize, uploadSpeeds, setUploadSpeeds) => {
+  // TODO
+  // setUploadSpeeds([...uploadSpeeds, speed.mbps]);
 };
 
 const DetermineSpeed = () => {
-  const [speedVals, setSpeedVals] = useState([]);
+  const [downloadSpeeds, setDownloadSpeeds] = useState([]);
+  const [uploadSpeeds, setUploadSpeeds] = useState([]);
+
   const [testCounter, setTestCounter] = useState(0);
+  const [lastByteSizeDown, setLastByteSizeDown] = useState(START_BYTE_SIZE);
+  const [lastByteSizeUp, setLastByteSizeUp] = useState(START_BYTE_SIZE);
   const [testStarted, setTestStarted] = useState(false);
 
   const startTest = () => {
     setTestStarted(true);
-    GetDownloadSpeed(0, speedVals, setSpeedVals);
-  }
+    GetDownloadSpeed(lastByteSizeDown, downloadSpeeds, setDownloadSpeeds);
+    GetUploadSpeed(lastByteSizeUp, uploadSpeeds, setUploadSpeeds);
+  };
 
   useEffect(() => {
     setTestCounter(testCounter + 1);
     if (testStarted && testCounter <= NUM_TEST) {
-      // Get new value
-      GetDownloadSpeed(testCounter, speedVals, setSpeedVals);
+      // Double byte size if (byte size * 8) / lastSpeed = time in sec <= 1.5
+      if ((lastByteSizeDown * 8) / downloadSpeeds[downloadSpeeds.length - 1] <= 1.5) {
+        setLastByteSizeDown(lastByteSizeDown * 10);
+      }
+      if ((lastByteSizeUp * 8) / uploadSpeeds[uploadSpeeds.length - 1] <= 1.5) {
+        setLastByteSizeUp(lastByteSizeUp * 10);
+      }
+      console.log("TEST NUM: ", testCounter);
+      console.log("BYTE SIZE", lastByteSizeDown);
+      GetDownloadSpeed(lastByteSizeDown, uploadSpeeds, setDownloadSpeeds);
+      GetUploadSpeed(lastByteSizeUp, uploadSpeeds, setUploadSpeeds);
     }
-  }, [speedVals])
+  }, [uploadSpeeds]);
 
   return (
     <div className="determine-speed">
       <button onClick={startTest}>Start</button>
-      <SpeedChart speedVals={speedVals} />
+      <SpeedChart downloadSpeeds={downloadSpeeds} uploadSpeeds={uploadSpeeds} />
     </div>
   );
 };
