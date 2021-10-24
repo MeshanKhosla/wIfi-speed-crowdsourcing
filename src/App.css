@@ -42,3 +42,14 @@
     transition: all 2s ease-in-out;
     transform: translateX(35%);
 }
+
+.move-to-left {
+    transition: all 2s ease-in-out;
+    transform: translateX(-35%);
+}
+
+.map-iframe {
+    position: absolute;
+    top: 150px;
+    left: 150px;
+}

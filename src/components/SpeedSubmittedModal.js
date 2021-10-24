@@ -15,7 +15,7 @@ const SpeedSubmittedModal = ({ showModal, setShowModal }) => {
         </Modal.Header>
         <Modal.Body>
           <p>
-            Thank you for contributing the WiFi speed in your area! Click <Link to='/map'>here</Link> to view the map!
+            Thank you for contributing the WiFi speed in your area!
           </p>
         </Modal.Body>
         <Modal.Footer>

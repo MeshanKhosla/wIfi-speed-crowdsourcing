@@ -11,6 +11,8 @@ import { Modal, Button } from 'react-bootstrap';
 import './App.css';
 import SpeedSubmittedModal from "./components/SpeedSubmittedModal";
 import Map from "./components/Map";
+import About from "./components/About";
+import axios from 'axios'
 
 /*
   Data schema:
@@ -29,8 +31,33 @@ const App = () => {
   const [userData, setUserData] = useState({'ID': 3});
   const [showModal, setShowModal] = useState(false);
 
+  // const myData =  {
+  //   "lat": 33,
+  //       "long": 44,
+  //       "flrID":5,
+  //       "bldID":3,
+  //       "dateTime": "2021-10-24 12:38:47.499",
+  //       "wifiName": "yahoo",
+  //       "dwnldSpd": 45,
+  //       "upldSpd": 19.39,
+  //       "outage": "false"
+  // }
+  useEffect(() => {
+    // axios.post('https://wifi-crowdsourcing-apim.azure-api.net/cockroachInserter/db_insert', myData, {
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //     'Access-Control-Allow-Origin': '*',
+    //     'Accept': '*/*',
+    //   }
+    // })
+    // .then(response => console.log(response))
+    // .catch(err => console.log(err));
+    // fetch("https://wifi-crowdsourcing-apim.azure-api.net/betterDataParser/db_insert")
+    //     .then(res => res.json())
+    //     .catch(err => console.log(err))
+  }, [])
+
   const sendDataToBackend = () => {
-    console.log(userData);
     setShowModal(true);
   }
 
@@ -53,10 +80,7 @@ const App = () => {
           {/*<p>WiFi Speed Crowdsourcing</p>*/}
           <Switch>
             <Route path="/about">
-              <p>About</p>
-            </Route>
-            <Route path="/map">
-              <Map setShowModal={setShowModal} />
+              <About />
             </Route>
             <Route path="/">
               <GetUserInformation userData={userData} setUserData={setUserData} />

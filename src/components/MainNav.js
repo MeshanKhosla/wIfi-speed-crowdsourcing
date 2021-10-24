@@ -14,9 +14,6 @@ const MainNav = () => {
               <Link to="/">Home</Link>
             </Nav.Link>
             <Nav.Link className='navbar-link'>
-              <Link to="/map">Map</Link>
-            </Nav.Link>
-            <Nav.Link className='navbar-link'>
               <Link to="/about">About</Link>
             </Nav.Link>
           </Nav>

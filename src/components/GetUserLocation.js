@@ -16,7 +16,8 @@ const GetUserLocation = ({ userData, setUserData }) => {
     setUserLatitude(lat);
     setUserLongitude(long);
     let date = new Date().toISOString();
-    setUserData({...userData, 'lat': lat, 'long': long, 'dateTime': date})
+    const correctlyFormattedDate = date.substring(0, 10) + " " + date.substring(11, date.length - 1);
+    setUserData({...userData, 'lat': lat, 'long': long, 'dateTime': correctlyFormattedDate})
   }
 
   const handleLatLongError = error => {
