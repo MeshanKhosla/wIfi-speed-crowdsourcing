@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import SpeedChart from "./SpeedChart";
 // Json file containing various imgs in increasing file size
+// TODO: json doesn't need size
 import img_links from "./img_links.json";
 
 const NUM_TEST = 3;
@@ -8,23 +9,21 @@ const NUM_TEST = 3;
 // Measures connection speed using an img_obj containing a link and size
 // TODO: set timeout
 const MeasureConnectionSpeed = (img_obj, speedVals, setSpeedVals) => {
-  const imageAddr = img_obj.link;
-  const downloadSize = img_obj.size;
+  let cacheBuster = "?nnn=" + Math.random();
+  const imageAddr = img_obj.link + cacheBuster;
   const download = new Image();
 
   download.onload = () => {
-    
-    endTime = new Date().getTime();
-    const duration = (endTime - startTime) / 1000;
-    console.log(duration);
-    const bitsLoaded = downloadSize * 8;
-    const speedBps = (bitsLoaded / duration).toFixed(2);
-    const speedKbps = (speedBps / 1024).toFixed(2);
-    const speedMbps = (speedKbps / 1024).toFixed(2);
-    console.log(speedMbps);
-    // Update speedVals array
-    console.log(speedVals);
-    setSpeedVals([...speedVals, speedMbps]);
+    const resources = performance.getEntriesByType("resource");
+    // TODO: try catch
+    const currImg = resources.filter(elem => elem.name === imageAddr)[0];
+    const durationInSec = (currImg.responseEnd - currImg.startTime) / 1000;
+    const sizeInMb = (currImg.transferSize || img_obj.size) * 8 * 1e-6;
+    const speedInMbps = sizeInMb / durationInSec;
+    console.log(currImg);
+    console.log(durationInSec);
+    console.log(sizeInMb);
+    setSpeedVals([...speedVals, speedInMbps]);
   };
 
   download.onerror = function (err, msg) {
@@ -33,14 +32,12 @@ const MeasureConnectionSpeed = (img_obj, speedVals, setSpeedVals) => {
     setSpeedVals([...speedVals, null]);
   };
 
-  let startTime, endTime;
-  startTime = new Date().getTime();
-  let cacheBuster = "?nnn=" + startTime;
-  download.src = imageAddr + cacheBuster;
+  download.src = imageAddr;
 };
 
 const GetDownloadSpeed = (imgIndex, speedVals, setSpeedVals) => {
   console.log("clicked");
+  console.log(imgIndex);
   // Currently only use the first img link
   MeasureConnectionSpeed(img_links[imgIndex], speedVals, setSpeedVals);
 };
