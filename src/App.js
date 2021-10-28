@@ -1,18 +1,16 @@
 import { useState, useEffect } from 'react';
 import GetUserInformation from "./components/GetUserInformation";
 import MainNav from './components/MainNav';
+import SpeedSubmittedModal from "./components/SpeedSubmittedModal";
+import About from "./components/About";
+import { apiKey } from './apiKey.json';
 import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link,
 } from "react-router-dom";
-import { Modal, Button } from 'react-bootstrap';
+import axios from 'axios';
 import './App.css';
-import SpeedSubmittedModal from "./components/SpeedSubmittedModal";
-import Map from "./components/Map";
-import About from "./components/About";
-import axios from 'axios'
 
 /*
   Data schema:
@@ -31,33 +29,32 @@ const App = () => {
   const [userData, setUserData] = useState({'ID': 3});
   const [showModal, setShowModal] = useState(false);
 
-  // const myData =  {
-  //   "lat": 33,
-  //       "long": 44,
-  //       "flrID":5,
-  //       "bldID":3,
-  //       "dateTime": "2021-10-24 12:38:47.499",
-  //       "wifiName": "yahoo",
-  //       "dwnldSpd": 45,
-  //       "upldSpd": 19.39,
-  //       "outage": "false"
-  // }
-  useEffect(() => {
-    // axios.post('https://wifi-crowdsourcing-apim.azure-api.net/cockroachInserter/db_insert', myData, {
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //     'Access-Control-Allow-Origin': '*',
-    //     'Accept': '*/*',
-    //   }
-    // })
-    // .then(response => console.log(response))
-    // .catch(err => console.log(err));
-    // fetch("https://wifi-crowdsourcing-apim.azure-api.net/betterDataParser/db_insert")
-    //     .then(res => res.json())
-    //     .catch(err => console.log(err))
-  }, [])
+  const myData =  {
+    "lat": 33,
+    "long": 44,
+    "flrID": 5,
+    "bldID": 3,
+    "dateTime": "2021-10-24 12:38:47.499",
+    "wifiName": "omg it works",
+    "dwnldSpd": 45,
+    "upldSpd": 19.39,
+    "outage": "false"
+  }
+
+  const config = {
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept',
+      'Accept': '*/*',
+      'Ocp-Apim-Subscription-Key': apiKey,
+      'Ocp-Apim-Trace': true,
+    }
+  }
 
   const sendDataToBackend = () => {
+    axios.post('https://db-interface-apis.azure-api.net/db-interface-app/cockroach_inserter', myData, config)
+        .then(res => console.log('Res', res))
+        .catch(err => console.log('Err', err));
     setShowModal(true);
   }
 
