@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import { Button } from "react-bootstrap";
 import DetermineSpeed from "./DetermineSpeed";
 import GetUserLocation from "./GetUserLocation";
+import IframeResizer from 'iframe-resizer-react'
+
 
 const GetUserInformation = ({ userData, setUserData }) => {
   const [scanStarted, setScanStarted] = useState(false);
@@ -28,10 +30,9 @@ const GetUserInformation = ({ userData, setUserData }) => {
         )}
       </div>
 
+        {/* TODO change this to be grid based styling instead of inline */}
         {scanStarted && (
-          <iframe className='map-iframe' width="425" height="350" frameBorder="0" scrolling="no" marginHeight="0" marginWidth="0"
-           src="https://www.openstreetmap.org/export/embed.html?bbox=-122.26675987243654%2C37.86932302984053%2C-122.25296258926393%2C37.874878800061445&amp;layer=mapnik"
-           style={{"border": '1px solid black'}}></iframe>
+          <iframe id="igraph" style={{marginLeft: '50px', transform: 'translateY(-103%)'}} scrolling="yes" seamless="seamless" src="https://plotly.com/~jas_lin1128/1.embed" height="525" width="50%"></iframe>
         )}
       </div>
   );

@@ -3,7 +3,7 @@ import GetUserInformation from "./components/GetUserInformation";
 import MainNav from './components/MainNav';
 import SpeedSubmittedModal from "./components/SpeedSubmittedModal";
 import About from "./components/About";
-import { apiKey } from './apiKey.json';
+// import { apiKey } from './apiKey.json';
 import {
   BrowserRouter as Router,
   Switch,
@@ -26,7 +26,7 @@ import './App.css';
 
 const allKeys = ['lat', 'long', 'ID', 'dateTime', 'dwnldSpd', 'upldSpd']
 const App = () => {
-  const [userData, setUserData] = useState({'ID': 3});
+  const [userData, setUserData] = useState({});
   const [showModal, setShowModal] = useState(false);
 
   const myData =  {
@@ -43,10 +43,10 @@ const App = () => {
 
   const config = {
     headers: {
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept',
-      'Accept': '*/*',
-      'Ocp-Apim-Subscription-Key': apiKey,
+      // 'Access-Control-Allow-Origin': '*',
+      // 'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept',
+      // 'Accept': '*/*',
+      'Ocp-Apim-Subscription-Key': process.env.REACT_APP_API_KEY,
       'Ocp-Apim-Trace': true,
     }
   }
@@ -85,6 +85,7 @@ const App = () => {
           </Switch>
           <SpeedSubmittedModal showModal={showModal} setShowModal={setShowModal}/>
         </Router>
+        <button onClick={sendDataToBackend}>click to send req</button>
       </div>
 
 
